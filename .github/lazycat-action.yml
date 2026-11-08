@@ -1,7 +1,3 @@
-manifest: ./lzc-manifest.yml
-pkgout: ./dist
-icon: ./icon.png
-contentdir: ./content
 version: 1
 project:
   root: .
@@ -29,13 +25,11 @@ images:
     delivery:
       mode: mirror
       require_digest_match: true
-release:
-  use_github_release_notes: true
-  store_changelog_format: plain
 stores:
   official:
     enabled: false
   private:
-    enabled: false
-    name: xbackbone
+    enabled: true
+    name: XBackBone
+    summary: 自托管文件分享与中转
     skip_if_version_exists: true
