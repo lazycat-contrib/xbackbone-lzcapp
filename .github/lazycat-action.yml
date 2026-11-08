@@ -1,16 +1,41 @@
-name: xbackbone-lpk
-on:
-  workflow_dispatch:
-permissions:
-  contents: write
-  pull-requests: write
-concurrency:
-  group: xbackbone-lpk
-  cancel-in-progress: false
-jobs:
-  lazycat:
-    uses: ca-x/lazycat-github-action/.github/workflows/lazycat.yml@v1
-    with:
-      operation: auto
-      config: .github/lazycat-action.yml
-      versioned-release-asset: true
+manifest: ./lzc-manifest.yml
+pkgout: ./dist
+icon: ./icon.png
+contentdir: ./content
+version: 1
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: dist/application.lpk
+  target_arch: amd64
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: xbackbone
+build:
+  toolchains: []
+  run_buildscript: false
+images:
+  - id: xbackbone
+    target: service
+    service: xbackbone
+    source: linuxserver/xbackbone
+    channel: stable
+    sort: semver
+    tag_regex: ^v?[0-9]+[.][0-9]+[.][0-9]+$
+    delivery:
+      mode: mirror
+      require_digest_match: true
+release:
+  use_github_release_notes: true
+  store_changelog_format: plain
+stores:
+  official:
+    enabled: false
+  private:
+    enabled: false
+    name: xbackbone
+    skip_if_version_exists: true
