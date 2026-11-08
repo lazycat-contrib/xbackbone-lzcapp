@@ -1,0 +1,42 @@
+application:
+  subdomain: xbackbone
+  multi_instance: false
+  # XBackBone 首次访问会进入网页安装向导（/install），自助完成数据库配置并
+  # 创建管理员账号，无需邮件验证，因此 public_path 开放直接访问
+  # （papra/servas 判例，2026-11-06）。
+  public_path:
+    - /
+  upstreams:
+    - location: /package-licenses/
+      backend: file:///lzcapp/pkg/content/licenses/
+    - location: /
+      backend: http://xbackbone:80/
+services:
+  xbackbone:
+    # upstream: linuxserver/xbackbone:3.8.2
+    image: docker.1ms.run/linuxserver/xbackbone:3.8.2
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Shanghai
+    binds:
+      - /lzcapp/var/mutdata/xbackbone:/config
+usage: |
+  XBackBone 是轻量级自托管文件分享与媒体管理工具（AGPL-3.0 许可，随包分发）：
+  上传图片、视频、文档即得可分享链接，支持多用户、收藏、批量操作与 ShareX /
+  ShareX iOS / Linux 客户端直传。
+
+  使用方法：
+  1. 首次打开应用会自动进入网页安装向导，数据库一栏选择 SQLite（推荐，无需额外
+     配置），管理员账号密码自行设置即可完成安装。
+  2. 若误选 MySQL 将无法使用（本包未捆绑 MySQL），需删除 /lzcapp/var/mutdata/
+     xbackbone 内文件后重新安装向导。
+  3. 安装完成后即可在网页或通过 ShareX 类客户端上传分享。
+
+  说明：
+  - 首次安装通过网页向导自助建号，因此使用 public_path 直接对外开放，由应用
+    自身登录页鉴权。
+  - 数据（配置、数据库、上传文件）保存在 /lzcapp/var/mutdata/xbackbone，
+    卸载会一并删除。
+  - 本包未做实机验证，功能以官方文档为准：https://github.com/SergiX44/XBackBone
+  - 许可证 AGPL-3.0，随包分发，见 /package-licenses/。

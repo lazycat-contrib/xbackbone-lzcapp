@@ -1,0 +1,18 @@
+package: community.lazycat.app.xbackbone
+name: XBackBone
+version: 3.8.2
+description: "A lightweight self-hosted file share and media management solution: upload images, videos and documents, get shareable links, with multi-user support."
+min_os_version: "1.5.0"
+homepage: https://xbackbone.app
+author: SergiX44
+license: "AGPL-3.0"
+permissions:
+  required:
+    - net.internet
+locales:
+  zh:
+    name: XBackBone
+    description: "轻量级自托管文件分享与媒体管理：上传图片、视频与文档即得可分享链接，支持多用户、快捷键与批量操作。"
+  en:
+    name: XBackBone
+    description: "A lightweight self-hosted file share and media management solution with shareable links and multi-user support."
