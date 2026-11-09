@@ -25,11 +25,3 @@ images:
     delivery:
       mode: mirror
       require_digest_match: true
-stores:
-  official:
-    enabled: false
-  private:
-    enabled: true
-    name: XBackBone
-    summary: 自托管文件分享与中转
-    skip_if_version_exists: true
